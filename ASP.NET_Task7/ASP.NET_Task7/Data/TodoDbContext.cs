@@ -1,9 +1,10 @@
 ﻿using ASP.NET_Task7.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP.NET_Task7.Data
 {
-    public class TodoDbContext : DbContext
+    public class TodoDbContext : IdentityDbContext<AppUser>
     {
         public TodoDbContext(DbContextOptions options) : base(options) { }
 

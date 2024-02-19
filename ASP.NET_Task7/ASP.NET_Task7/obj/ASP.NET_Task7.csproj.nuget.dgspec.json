@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ASUS\\Desktop\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj": {}
+    "C:\\Users\\ASUS\\Desktop\\ASP.NET Tasks\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ASUS\\Desktop\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj": {
+    "C:\\Users\\ASUS\\Desktop\\ASP.NET Tasks\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj",
+        "projectUniqueName": "C:\\Users\\ASUS\\Desktop\\ASP.NET Tasks\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj",
         "projectName": "ASP.NET_Task7",
-        "projectPath": "C:\\Users\\ASUS\\Desktop\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj",
+        "projectPath": "C:\\Users\\ASUS\\Desktop\\ASP.NET Tasks\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\ASP.NET_Task7.csproj",
         "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ASUS\\Desktop\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\obj\\",
+        "outputPath": "C:\\Users\\ASUS\\Desktop\\ASP.NET Tasks\\ASP.NET Task 7\\ASP.NET_Task7\\ASP.NET_Task7\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.1, )"
@@ -78,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

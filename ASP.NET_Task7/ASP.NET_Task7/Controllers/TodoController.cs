@@ -1,28 +1,34 @@
 ﻿using ASP.NET_Task7.Models.DTOs.Pagination;
 using ASP.NET_Task7.Models.DTOs.Todo;
+using ASP.NET_Task7.Providers;
 using ASP.NET_Task7.Services.TodoServices;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ASP.NET_Task7.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TodoController : ControllerBase
     {
         private readonly ITodoService _todoService;
-
-        public TodoController(ITodoService todoService)
+        private readonly IRequestUserProvider _provider;
+        public TodoController(ITodoService todoService, IRequestUserProvider provider)
         {
             _todoService = todoService;
+            _provider = provider;
         }
 
 
         [HttpGet("get/{id}")]
         public async Task<ActionResult<TodoItemDto>> Get(int id)
         {
-            var item = await _todoService.GetTodoItem(id);
+            UserInfo? userInfo = _provider.GetUserInfo();
+            var item = await _todoService.GetTodoItem(id, userInfo!);
 
             return item is not null
                 ? item
@@ -33,7 +39,8 @@ namespace ASP.NET_Task7.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult<bool>> Delete(int id)
         {
-            var isDeleted = await _todoService.DeleteTodo(id);
+            UserInfo? userInfo = _provider.GetUserInfo();
+            var isDeleted = await _todoService.DeleteTodo(id, userInfo!);
 
             return isDeleted 
                 ? Ok(true)
@@ -45,9 +52,10 @@ namespace ASP.NET_Task7.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<TodoItemDto>> Create([FromBody] CreateTodoItemRequest request)
         {
+            UserInfo? userInfo = _provider.GetUserInfo();
             try
             {
-                var createdTodoItemDto = await _todoService.CreateTodo(request);
+                var createdTodoItemDto = await _todoService.CreateTodo(request, userInfo!);
                 return CreatedAtAction(nameof(Get), new { id = createdTodoItemDto.Id }, createdTodoItemDto);
             }
             catch (ArgumentException ex)
@@ -62,7 +70,8 @@ namespace ASP.NET_Task7.Controllers
         {
             try
             {
-                var changedTodoItemDto = await _todoService.ChangeTodoItemStatus(id, isCompleted);
+                UserInfo? userInfo = _provider.GetUserInfo();
+                var changedTodoItemDto = await _todoService.ChangeTodoItemStatus(id, isCompleted, userInfo!);
                 return Ok(changedTodoItemDto);
             }
             catch (ArgumentException ex)
@@ -76,7 +85,8 @@ namespace ASP.NET_Task7.Controllers
         [HttpGet("all")]
         public async Task<PaginatedListDto<TodoItemDto>?> All(PaginationRequest request)
         {
-            var result = await _todoService.GetAll(request.Page, request.PageSize);
+            UserInfo? userInfo = _provider.GetUserInfo();
+            var result = await _todoService.GetAll(request.Page, request.PageSize, userInfo!);
             return result is not null ? result : null;
         }
 

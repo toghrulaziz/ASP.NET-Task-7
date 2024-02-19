@@ -2,6 +2,7 @@
 using ASP.NET_Task7.Models.DTOs.Pagination;
 using ASP.NET_Task7.Models.DTOs.Todo;
 using ASP.NET_Task7.Models.Entities;
+using ASP.NET_Task7.Providers;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP.NET_Task7.Services.TodoServices
@@ -9,14 +10,13 @@ namespace ASP.NET_Task7.Services.TodoServices
     public class TodoService : ITodoService
     {
         private readonly TodoDbContext _context;
-
-        public TodoService(TodoDbContext context)
+        public TodoService(TodoDbContext context, IRequestUserProvider provider)
         {
             _context = context;
         }
-        public async Task<TodoItemDto> ChangeTodoItemStatus(int id, bool isCompleted)
+        public async Task<TodoItemDto> ChangeTodoItemStatus(int id, bool isCompleted, UserInfo userInfo)
         {
-            var todoItem = await _context.TodoItems.FirstOrDefaultAsync(e => e.Id == id);
+            var todoItem = await _context.TodoItems.FirstOrDefaultAsync(e => e.Id == id && e.UserId == userInfo.Id);
 
             if (todoItem == null)
             {
@@ -36,12 +36,13 @@ namespace ASP.NET_Task7.Services.TodoServices
             return changedTodoItemDto;
         }
 
-        public async Task<TodoItemDto> CreateTodo(CreateTodoItemRequest request)
+        public async Task<TodoItemDto> CreateTodo(CreateTodoItemRequest request, UserInfo userInfo)
         {
             var newTodoItem = new TodoItem
             {
                 Text = request.Text,
                 CreatedTime = DateTime.Now,
+                UserId = userInfo.Id
             };
 
             _context.TodoItems.Add(newTodoItem);
@@ -57,9 +58,11 @@ namespace ASP.NET_Task7.Services.TodoServices
             return todoItemDto;
         }
 
-        public async Task<bool> DeleteTodo(int id)
+
+
+        public async Task<bool> DeleteTodo(int id, UserInfo userInfo)
         {
-            var todoItem = await _context.TodoItems.FirstOrDefaultAsync(e => e.Id == id);
+            var todoItem = await _context.TodoItems.FirstOrDefaultAsync(e => e.Id == id && e.UserId == userInfo.Id);
 
             if (todoItem == null)
             {
@@ -71,9 +74,9 @@ namespace ASP.NET_Task7.Services.TodoServices
             return true;
         }
 
-        public async Task<PaginatedListDto<TodoItemDto>> GetAll(int page, int pageSize)
+        public async Task<PaginatedListDto<TodoItemDto>> GetAll(int page, int pageSize, UserInfo userInfo)
         {
-            IQueryable<TodoItem> query = _context.TodoItems.AsQueryable();
+            IQueryable<TodoItem> query = _context.TodoItems.Where(e => e.UserId == userInfo.Id);
             var items = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             var totalCount = await query.CountAsync();
 
@@ -88,9 +91,9 @@ namespace ASP.NET_Task7.Services.TodoServices
             );
         }
 
-        public async Task<TodoItemDto?> GetTodoItem(int id)
+        public async Task<TodoItemDto?> GetTodoItem(int id, UserInfo userInfo)
         {
-            var todoItem = await _context.TodoItems.FirstOrDefaultAsync(e => e.Id == id);
+            var todoItem = await _context.TodoItems.FirstOrDefaultAsync(e => e.Id == id && e.UserId == userInfo.Id);
 
             return todoItem is not null
                 ? new TodoItemDto(
@@ -100,5 +103,8 @@ namespace ASP.NET_Task7.Services.TodoServices
                     createdTime: todoItem.CreatedTime)
                 : null;
         }
+
+
+
     }
 }

@@ -6,5 +6,7 @@
         public bool IsCompleted { get; set; }
         public DateTime CreatedTime { get; set; }
         public DateTime UpdatedTime { get; set; }
+        public string UserId { get; set; }
+        public virtual AppUser User { get; set; }
     }
 }
