@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASP.NET_Task7.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20240218095732_mig1")]
+    [Migration("20240219162254_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -102,6 +102,9 @@ namespace ASP.NET_Task7.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Deadline")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsCompleted")

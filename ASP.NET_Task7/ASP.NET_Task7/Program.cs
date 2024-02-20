@@ -1,4 +1,7 @@
 using ASP.NET_Task7;
+using ASP.NET_Task7.Services.MailService;
+using ASP.NET_Task7.Services.NatificationService;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationAndAuthorization(builder.Configuration);
 
-builder.Services.AddDomainServices();
+builder.Services.AddDomainServices(builder.Configuration);
 
-builder.Services.AddTodoContext(builder.Configuration); 
+builder.Services.AddTodoContext(builder.Configuration);
+
+builder.Services.AddHostedService<TodoDeadlineNotificationService>();
 
 var app = builder.Build();
 

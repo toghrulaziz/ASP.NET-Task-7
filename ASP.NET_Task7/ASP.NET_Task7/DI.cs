@@ -2,10 +2,12 @@
 using ASP.NET_Task7.Data;
 using ASP.NET_Task7.Models.Entities;
 using ASP.NET_Task7.Providers;
+using ASP.NET_Task7.Services.MailService;
 using ASP.NET_Task7.Services.TodoServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -84,10 +86,18 @@ namespace ASP.NET_Task7
         }
 
 
-        public static IServiceCollection AddDomainServices(this IServiceCollection services)
+        public static IServiceCollection AddDomainServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ITodoService, TodoService>();
             services.AddScoped<IJwtService, JwtService>();
+            services.AddSingleton<IMailService>(provider => new MailService(
+                    configuration["Smtp:Host"],
+                    configuration.GetValue<int>("Smtp:Port"),
+                    configuration["Smtp:Username"],
+                    configuration["Smtp:Password"],
+                    configuration["Smtp:FromAddress"]
+                )
+            );
             services.AddScoped<IRequestUserProvider, RequestUserProvider>();
             return services;
         }

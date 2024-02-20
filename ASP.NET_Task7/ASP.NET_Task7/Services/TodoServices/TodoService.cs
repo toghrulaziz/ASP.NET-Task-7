@@ -30,7 +30,8 @@ namespace ASP.NET_Task7.Services.TodoServices
                     id: todoItem.Id,
                     text: todoItem.Text,
                     isCompleted: todoItem.IsCompleted,
-                    createdTime: todoItem.CreatedTime
+                    createdTime: todoItem.CreatedTime,
+                    deadline: todoItem.Deadline
                 );
 
             return changedTodoItemDto;
@@ -42,7 +43,8 @@ namespace ASP.NET_Task7.Services.TodoServices
             {
                 Text = request.Text,
                 CreatedTime = DateTime.Now,
-                UserId = userInfo.Id
+                UserId = userInfo.Id,
+                Deadline = request.Deadline
             };
 
             _context.TodoItems.Add(newTodoItem);
@@ -52,7 +54,8 @@ namespace ASP.NET_Task7.Services.TodoServices
                     id: newTodoItem.Id,
                     text: newTodoItem.Text,
                     isCompleted: newTodoItem.IsCompleted,
-                    createdTime: newTodoItem.CreatedTime
+                    createdTime: newTodoItem.CreatedTime,
+                    deadline: newTodoItem.Deadline
                 );
 
             return todoItemDto;
@@ -85,7 +88,8 @@ namespace ASP.NET_Task7.Services.TodoServices
                     id: e.Id,
                     text: e.Text,
                     isCompleted: e.IsCompleted,
-                    createdTime: e.CreatedTime
+                    createdTime: e.CreatedTime,
+                    deadline: e.Deadline
                 )),
             new PaginationMeta(page, pageSize, totalCount)
             );
@@ -100,10 +104,26 @@ namespace ASP.NET_Task7.Services.TodoServices
                     id: todoItem.Id,
                     text: todoItem.Text,
                     isCompleted: todoItem.IsCompleted,
-                    createdTime: todoItem.CreatedTime)
+                    createdTime: todoItem.CreatedTime,
+                    deadline: todoItem.Deadline)
                 : null;
         }
 
+
+        public async Task<List<TodoItem>> GetItemsWithUpcomingDeadlinesAsync()
+        {
+            var upcomingItems = await _context.TodoItems
+                .Where(item => item.Deadline.Date == DateTime.UtcNow.Date.AddDays(1)) 
+                .ToListAsync();
+
+            return upcomingItems;
+        }
+
+
+        public async Task<AppUser> GetUserByIdAsync(string userId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        }
 
 
     }
