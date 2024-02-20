@@ -278,3 +278,12 @@ C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\o
 C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\obj\Debug\net8.0\ASP.NET_Task7.pdb
 C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\obj\Debug\net8.0\ASP.NET_Task7.genruntimeconfig.cache
 C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\obj\Debug\net8.0\ref\ASP.NET_Task7.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.AspNetCore.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Sinks.File.dll

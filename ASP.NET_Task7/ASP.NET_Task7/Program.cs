@@ -2,8 +2,11 @@ using ASP.NET_Task7;
 using ASP.NET_Task7.Services.MailService;
 using ASP.NET_Task7.Services.NatificationService;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the container.
 
@@ -12,6 +15,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwagger();
 builder.Services.AddAuthenticationAndAuthorization(builder.Configuration);
+
 
 builder.Services.AddDomainServices(builder.Configuration);
 
