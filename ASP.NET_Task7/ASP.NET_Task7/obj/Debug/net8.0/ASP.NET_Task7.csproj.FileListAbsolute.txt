@@ -287,3 +287,4 @@ C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\b
 C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Sinks.Console.dll
 C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
 C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\Serilog.Sinks.File.dll
+C:\Users\ASUS\Desktop\ASP.NET Tasks\ASP.NET Task 7\ASP.NET_Task7\ASP.NET_Task7\bin\Debug\net8.0\RabbitMQ.Client.dll

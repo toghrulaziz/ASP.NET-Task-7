@@ -1,0 +1,16 @@
+{
+  "RabbitMQ": {
+    "HostName": "localhost",
+    "UserName": "guest",
+    "Password": "guest",
+    "QueueName": "mails",
+    "Port": 5672
+  },
+  "Smtp": {
+    "Host": "smtp.gmail.com",
+    "Port": 587,
+    "Username": "togrul1609@gmail.com",
+    "Password": "vjbttugyklmahjfx",
+    "FromAddress": "togrul1609@gmail.com"
+  }
+}

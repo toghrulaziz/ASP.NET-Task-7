@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ASP.NET_Task7.Models.DTOs.Auth;
 using Microsoft.EntityFrameworkCore;
+using ASP.NET_Task7.Services.RabbitMqService;
+using ASP.NET_Task7.Configuration;
 
 namespace ASP.NET_Task7.Controllers
 {
@@ -16,12 +18,16 @@ namespace ASP.NET_Task7.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IJwtService _jwtService;
+        private readonly IRabbitMQService _rabbitMQService;
+        private readonly RabbitMQConfiguration _rabbitMQConfiguration;
 
-        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtService jwtService)
+        public AuthController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtService jwtService, IRabbitMQService rabbitMQService, RabbitMQConfiguration rabbitMQConfiguration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtService = jwtService;
+            _rabbitMQService = rabbitMQService;
+            _rabbitMQConfiguration = rabbitMQConfiguration;
         }
 
         private async Task<AuthTokenDto> GenerateToken(AppUser user)
@@ -60,6 +66,14 @@ namespace ASP.NET_Task7.Controllers
 
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
+
+            var confirmationMessage = new ConfirmationMessageDto
+            {
+                UserId = user.Id,
+                Email = user.Email
+            };
+
+            _rabbitMQService.Publish<ConfirmationMessageDto>(confirmationMessage, _rabbitMQConfiguration.QueueName);
 
             return await GenerateToken(user);
         }
