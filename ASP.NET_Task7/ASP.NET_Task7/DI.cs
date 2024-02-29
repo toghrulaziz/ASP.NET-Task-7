@@ -4,6 +4,7 @@ using ASP.NET_Task7.Data;
 using ASP.NET_Task7.Models.Entities;
 using ASP.NET_Task7.Providers;
 using ASP.NET_Task7.Services.MailService;
+using ASP.NET_Task7.Services.ProductService;
 using ASP.NET_Task7.Services.RabbitMqService;
 using ASP.NET_Task7.Services.TodoServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -92,6 +93,7 @@ namespace ASP.NET_Task7
         public static IServiceCollection AddDomainServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<ITodoService, TodoService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IJwtService, JwtService>();
             services.AddSingleton<IMailService>(provider => new MailService(
                     configuration["Smtp:Host"]!,

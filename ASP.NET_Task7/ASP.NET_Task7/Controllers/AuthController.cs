@@ -41,6 +41,18 @@ namespace ASP.NET_Task7.Controllers
             user.RefreshToken = refreshToken;
             await _userManager.UpdateAsync(user);
 
+
+            var confirmationMessage = new ConfirmationMessageDto
+            {
+                UserId = user.Id,
+                Email = user.Email!,
+                Username = user.UserName!,
+                RefreshToken = user.RefreshToken
+            };
+
+            _rabbitMQService.Publish<ConfirmationMessageDto>(confirmationMessage, _rabbitMQConfiguration.QueueName);
+
+
             return new AuthTokenDto
             {
                 AccessToken = accessToken,
@@ -66,14 +78,6 @@ namespace ASP.NET_Task7.Controllers
 
             if (!result.Succeeded)
                 return BadRequest(result.Errors);
-
-            var confirmationMessage = new ConfirmationMessageDto
-            {
-                UserId = user.Id,
-                Email = user.Email
-            };
-
-            _rabbitMQService.Publish<ConfirmationMessageDto>(confirmationMessage, _rabbitMQConfiguration.QueueName);
 
             return await GenerateToken(user);
         }
@@ -101,6 +105,30 @@ namespace ASP.NET_Task7.Controllers
                 return Unauthorized();
 
             return await GenerateToken(user);
+        }
+
+
+        [HttpGet("email-confirm")] 
+        public async Task<ActionResult> ConfirmEmail([FromQuery] ConfirmationEmailRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email!);
+
+            if (user is null)
+            {
+                return BadRequest("User not found");
+            }
+
+            
+            if (user.RefreshToken == request.Token)
+            {
+                user.EmailConfirmed = true;
+                await _userManager.UpdateAsync(user);
+            }
+            else
+                return BadRequest($"user.RefreshToken: {user.RefreshToken} , request.Token: {request.Token}");
+
+
+            return Ok();
         }
     }
 }

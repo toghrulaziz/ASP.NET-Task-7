@@ -9,5 +9,7 @@ namespace ASP.NET_Task7.Data
         public TodoDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<TodoItem> TodoItems => Set<TodoItem>();
+        public DbSet<Product> Products => Set<Product>();
+        public DbSet<Category> Categories => Set<Category>();
     }
 }

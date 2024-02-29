@@ -57,10 +57,19 @@ consumer.Received += (model, ea) =>
     var message = Encoding.UTF8.GetString(body);
     var confirmationMessage = JsonSerializer.Deserialize<ConfirmationMessageDto>(message);
 
+    string confirmationLink = $"https://localhost:7247/api/auth/email-confirm?email={confirmationMessage!.Email}&token={confirmationMessage!.RefreshToken}";
+
+    Console.WriteLine(confirmationMessage.RefreshToken);
+
     string toAddress = confirmationMessage!.Email!;
     string subject = "Confirmation Email";
-    string mailbody = $"Dear User,<br><br>" +
-               "Thank you for registering.";
+    //string mailbody = $"Dear User,<br><br>" +
+    //           "Thank you for registering.";
+
+    string mailbody = $"Dear {confirmationMessage.Username},<br><br>" +
+                  "Thank you for registering. Please click the following link to confirm your email address:<br>" +
+                  $"<a href='{confirmationLink}'>Confirm Email Address</a>";
+
 
     mailService.SendMail(toAddress, subject, mailbody);
 };
